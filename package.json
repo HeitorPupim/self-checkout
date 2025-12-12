@@ -7,13 +7,17 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
-  },
+},
+  "prisma":{
+    "seed": "ts-node ./prisma/seed.ts"
+},
   "dependencies": {
     "@prisma/client": "6.2.1",
     "next": "15.1.6",
     "prisma": "6.2.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
