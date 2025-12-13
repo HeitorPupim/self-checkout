@@ -1,7 +1,4 @@
 import { db } from "@/lib/prisma";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { ChevronLeftIcon, ScrollTextIcon } from "lucide-react";
 import { notFound } from "next/navigation";
 import ProductHeader from "./components/product-header";
 import ProductDetails from "./components/product-detail";
@@ -40,11 +37,6 @@ const ProductPage = async ({params}: ProductPageProps) => {
       <ProductHeader product={product}/>
       <ProductDetails product={product}/>
     </div>
-
-  
-
-
-
 
 );
 }
