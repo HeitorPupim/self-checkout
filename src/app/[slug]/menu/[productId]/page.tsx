@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeftIcon, ScrollTextIcon } from "lucide-react";
 import { notFound } from "next/navigation";
 import ProductHeader from "./components/product-header";
+import ProductDetails from "./components/product-detail";
 
 interface ProductPageProps {
   params: Promise <{
@@ -17,26 +18,30 @@ const ProductPage = async ({params}: ProductPageProps) => {
 
   const product = await db.product.findUnique({
     where: {id: productId},
+    include: {
+      restaurant: {
+        select: {
+          slug: true,
+          name: true,
+          avatarImageUrl: true,
+        },
+      },
+    },
   });
   if (!product){
     return notFound();
   }
-
+  if (product.restaurant.slug.toUpperCase() !== slug.toUpperCase() ){
+    return notFound();
+  }
 
   return ( 
-    <div>
-      {/* Foto do produto */}
-      <div className="relative w-full h-[300px]">
-        <ProductHeader product={product}/>
-
-      </div>
-
-
-
-      <h1>Product Page</h1>
-     {slug}
-     {productId}  
+    <div className="flex h-full flex-col">
+      <ProductHeader product={product}/>
+      <ProductDetails product={product}/>
     </div>
+
+  
 
 
 
