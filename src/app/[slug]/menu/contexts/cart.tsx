@@ -4,7 +4,7 @@ import { Product } from "@prisma/client";
 import { createContext, useState } from "react";
 
 // Products do Prisma + quantidade
-interface CartProduct extends Pick<
+export interface CartProduct extends Pick<
   Product,
   "id" | "name" | "price" | "imageUrl"
 > {
@@ -34,22 +34,22 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Se está falso, a função muda para verdadeiro e vice-versa -> abre o carrinho
   const toggleCart = () => {
-    setIsOpen((prev) => !prev);
+    setIsOpen((prevProduct) => !prevProduct);
   };
 
   const addProduct = (product: CartProduct) => {
-    setProducts((prev) => {
-      const existingProduct = prev.find((p) => p.id === product.id);
+    setProducts((prevProduct) => {
+      const existingProduct = prevProduct.find((p) => p.id === product.id);
       if (existingProduct) {
         // Se o produto já existe, atualiza a quantidade
-        return prev.map((p) =>
+        return prevProduct.map((p) =>
           p.id === product.id
             ? { ...p, quantity: p.quantity + product.quantity }
             : p,
         );
       }
       // Se não existe, adiciona como novo
-      return [...prev, product];
+      return [...prevProduct, product];
     });
   };
 
