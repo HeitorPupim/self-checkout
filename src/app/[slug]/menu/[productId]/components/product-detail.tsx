@@ -45,7 +45,6 @@ const ProductDetails = ({ product }: ProductDetailsPropos) => {
   };
   // console.log(isOpen)
   return (
-    <>
       <div className="relative z-50 mt-[-1.5rem] flex flex-col rounded-t-3xl p-5 pb-20">
         <div className="flex-auto overflow-hidden">
           {/* Restaurante */}
@@ -117,9 +116,10 @@ const ProductDetails = ({ product }: ProductDetailsPropos) => {
         <Button className="mt-6 w-full rounded-full" onClick={handleAddToCart}>
           Adicionar à sacola
         </Button>
+        <CartSheet />
       </div>
-      <CartSheet />
-    </>
+      
+
   );
 };
 
