@@ -46,7 +46,7 @@ const ProductDetails = ({ product }: ProductDetailsPropos) => {
   // console.log(isOpen)
   return (
     <>
-      <div className="relative z-50 mt-[-1.5rem] flex flex-col rounded-t-3xl p-5">
+      <div className="relative z-50 mt-[-1.5rem] flex flex-col rounded-t-3xl p-5 pb-20">
         <div className="flex-auto overflow-hidden">
           {/* Restaurante */}
           <div className="flex items-center gap-1.5">
