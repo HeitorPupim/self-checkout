@@ -21,6 +21,10 @@ RUN apk add --no-cache libc6-compat openssl
 
 WORKDIR /app
 
+# Receive DATABASE_URL as build argument
+ARG DATABASE_URL
+ENV DATABASE_URL=${DATABASE_URL}
+
 # Copy dependencies from deps stage
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
