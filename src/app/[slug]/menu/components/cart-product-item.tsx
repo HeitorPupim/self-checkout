@@ -17,14 +17,15 @@ const CartProductItem = ({product}: CartProductItemProps) => {
   const {decreaseProductQuantity, increaseProductQuantity, removeProduct} = useContext(CartContext);
   
   return (  
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-10">
         <div className="flex items-center gap-3">
           {/* Esquerda */}
           <div className = "relative h-20 w-20 bg-gray-100 rounded-xl">
             <Image
-            src={product.imageUrl}
-            alt={product.name}
-            fill // tem o mesmo tamanho do width e height da div pai
+              src={product.imageUrl}
+              alt={product.name}
+              fill
+              className="object-cover rounded-xl"
             />
           </div>
           {/* Direita */}

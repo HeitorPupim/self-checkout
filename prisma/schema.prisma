@@ -56,6 +56,8 @@ model Product {
 
 model Order {
   id                Int            @id @default(autoincrement())
+  customerName      String
+  customerCpf       String
   total             Float
   status            OrderStatus
   consumptionMethod String
