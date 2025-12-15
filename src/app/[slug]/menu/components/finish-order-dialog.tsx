@@ -9,6 +9,7 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
+  DrawerTrigger,
 } from "@/components/ui/drawer";
 import { z } from "zod";
 import { isValidCpf } from "../helpers/cpf";
@@ -32,7 +33,6 @@ import { CartContext } from "../contexts/cart";
 import { toast } from "sonner";
 import { Loader2Icon } from "lucide-react";
 
-
 const formSchema = z.object({
   name: z.string().trim().min(1, {
     message: "Nome é obrigatório",
@@ -47,13 +47,12 @@ type FormSchema = z.infer<typeof formSchema>;
 interface FinishOrderDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onOrderSuccess?: () => void;
 }
 
-const FinishOrderDialog = ({open, onOpenChange, onOrderSuccess}: FinishOrderDialogProps) => {
+const FinishOrderDialog = ({ open, onOpenChange }: FinishOrderDialogProps) => {
   const searchParams = useSearchParams();
-  const {products} = useContext(CartContext)
-  const {slug} = useParams<{slug:string}>()
+  const { products } = useContext(CartContext);
+  const { slug } = useParams<{ slug: string }>();
   const [isPending, startTransition] = useTransition();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
@@ -63,27 +62,30 @@ const FinishOrderDialog = ({open, onOpenChange, onOrderSuccess}: FinishOrderDial
     },
   });
 
-
   const onSubmit = async (data: FormSchema) => {
-    const consumptionMethod = searchParams.get("consumptionMethod") as ConsumptionMethod;
+    const consumptionMethod = searchParams.get(
+      "consumptionMethod",
+    ) as ConsumptionMethod;
     try {
       await createOrder({
         consumptionMethod,
         customerCpf: data.cpf,
         customerName: data.name,
         products,
-        slug
+        slug,
       });
       onOpenChange(false);
       toast.success("Pedido finalizado com sucesso!");
-      onOrderSuccess?.();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
+      <DrawerTrigger asChild>
+        <Button className="mb-10 w-full rounded-full">Finalizar pedido</Button>
+      </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Finalizar Pedido</DrawerTitle>
@@ -117,7 +119,7 @@ const FinishOrderDialog = ({open, onOpenChange, onOrderSuccess}: FinishOrderDial
                   <FormLabel>CPF</FormLabel>
                   <FormControl>
                     <PatternFormat
-                      placeholder ="Digite seu CPF"
+                      placeholder="Digite seu CPF"
                       format="###.###.###-##"
                       customInput={Input}
                       {...field}
@@ -128,19 +130,19 @@ const FinishOrderDialog = ({open, onOpenChange, onOrderSuccess}: FinishOrderDial
               )}
             />
             <DrawerFooter className="px-0">
-              <Button 
+              <Button
                 type="submit"
-                className=" w-full rounded-full"
-                variant= "destructive"
+                className="w-full rounded-full"
+                variant="destructive"
                 disabled={isPending}
-                >
-                  {isPending && <Loader2Icon className="animate-spin" />}
-                  Finalizar
-                </Button>
+              >
+                {isPending && <Loader2Icon className="animate-spin" />}
+                Finalizar
+              </Button>
               <DrawerClose asChild>
-                <Button 
-                  type="button" 
-                  variant="outline" 
+                <Button
+                  type="button"
+                  variant="outline"
                   className="w-full rounded-full"
                 >
                   Cancelar
