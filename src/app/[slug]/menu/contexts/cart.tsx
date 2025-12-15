@@ -15,6 +15,7 @@ export interface ICartContext {
   isOpen: boolean;
   total: number;
   products: CartProduct[];
+  totalQuantity: number;
   toggleCart: () => void;
   addProduct: (product: CartProduct) => void;
   decreaseProductQuantity: (productId: string) => void;
@@ -25,6 +26,7 @@ export interface ICartContext {
 export const CartContext = createContext<ICartContext>({
   isOpen: false, // padrão fechado
   total: 0,
+  totalQuantity: 0,
   products: [],
   toggleCart: () => {},
   addProduct: () => {},
@@ -41,6 +43,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const total = products.reduce((acc, product) => acc + product.price * product.quantity, 0);
+
+  const totalQuantity = products.reduce((acc, product) => acc + product.quantity, 0);
 
   // Se está falso, a função muda para verdadeiro e vice-versa -> abre o carrinho
   const toggleCart = () => {
@@ -102,6 +106,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         isOpen,
         total,
+        totalQuantity,
         products,
         toggleCart,
         addProduct,
