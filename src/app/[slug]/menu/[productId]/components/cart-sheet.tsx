@@ -1,3 +1,7 @@
+import { useContext, useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Sheet,
   SheetContent,
@@ -5,13 +9,11 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { useContext, useState } from "react";
-import { CartContext } from "../../contexts/cart";
-import CartProductItem from "../../components/cart-product-item";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { formatCurrency } from "@/helpers/format-currency";
+
+import CartProductItem from "../../components/cart-product-item";
 import FinishOrderDialog from "../../components/finish-order-dialog";
+import { CartContext } from "../../contexts/cart";
 
 const CartSheet = () => {
   const { isOpen, toggleCart, products, total } = useContext(CartContext);
