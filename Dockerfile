@@ -7,11 +7,11 @@ RUN apk add --no-cache libc6-compat openssl
 WORKDIR /app
 
 # Copy package files
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json* ./
 COPY prisma ./prisma/
 
 # Install dependencies
-RUN npm ci
+RUN npm install --legacy-peer-deps
 
 # ============================
 # Stage 2: Builder
